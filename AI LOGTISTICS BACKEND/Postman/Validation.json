@@ -1,0 +1,12 @@
+{
+  "collection_schema": "Official Postman v2.1 schema",
+  "collection_schema_errors": [],
+  "json_bodies_validated_against_openapi": 60,
+  "json_body_errors": [],
+  "controller_operations": 165,
+  "collection_requests": 169,
+  "missing_controller_operations": [],
+  "postman_scripts_validated_for_syntax": 169,
+  "api_business_operations_executed": false,
+  "openapi_sha256": "d0d37ff6973c73bad2d3a5496731d7aef7328d2205a96230c37a125eb799cd90"
+}

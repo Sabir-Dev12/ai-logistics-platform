@@ -1,0 +1,57 @@
+import {AuthenticationError} from "./authenticationService";
+import {PaymentError,paymentTypes} from "../Payments/paymentRules";
+export class PaymentsApiError extends Error{constructor(code,message,{uncertain=false}={}){super(message);this.name="PaymentsApiError";this.code=code;this.uncertain=uncertain;}}
+export const paymentStatuses=["Saisie","Portefeuille","RemisEnBanque","RemisAuFournisseur","Signe","Regle","Impaye"];
+const invalid=()=>new PaymentsApiError("invalid_response","Le serveur a renvoyé des données invalides. Actualisez la page.");
+const uncertain=()=>new PaymentsApiError("uncertain","La confirmation n’a pas été reçue. Vérifiez le règlement avant de recommencer.",{uncertain:true});
+const rules={"reglement.allocation.exists":"Cette facture est déjà affectée à ce règlement.","facture.already_settled":"Cette facture est déjà réglée.","reglement.devise":"Les devises du règlement et de la facture sont incompatibles.","avance.depassement":"Le montant dépasse le reste de l’avance.","ecart.refuse":"L’écart de règlement dépasse le seuil autorisé.","reglement.deleted":"Ce règlement est supprimé.","reglement.allocation.positive":"Le montant affecté doit être positif."};
+const enumValue=(value,names)=>{if(Number.isInteger(value)&&names[value])return names[value];if(names.includes(value))return value;throw invalid();};
+const key=value=>{if(typeof value!=="string"||!value.trim())throw new PaymentError("Renseignez une référence valide.");return encodeURIComponent(value);};
+const num=(value,positive=false)=>{if(value==null||value===""||!Number.isFinite(Number(value))||(positive&&Number(value)<=0))throw new PaymentError("Renseignez un montant ou taux valide.");return Number(value);};
+const date=value=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(value||"")||!Number.isFinite(Date.parse(value))||new Date(value+"T00:00:00Z").toISOString().slice(0,10)!==value)throw new PaymentError("Renseignez une date valide.");return value+"T00:00:00";};
+const summary=row=>{if(!row||typeof row.keyReglement!=="string"||!row.keyReglement||!["montantDevise","montantMad"].every(field=>Number.isFinite(row[field])))throw invalid();return {...row,id:row.keyReglement,partyId:row.keyTiers||"",type:enumValue(row.typeReglement,paymentTypes),nature:enumValue(row.natureReglement,["Reglement","Avance"]),status:enumValue(row.statut,paymentStatuses),date:row.dateOperation?.slice(0,10)||"",dueDate:row.dateEcheance?.slice(0,10)||"",amount:row.montantDevise,mad:row.montantMad,currency:row.devise||"",reference:row.referencePaiement||"",allocations:[]};};
+const detail=row=>{const value=summary(row);if(!Array.isArray(row.allocations)||!["tauxDevise","resteAvance","montantImputeAvance"].every(field=>Number.isFinite(row[field])))throw invalid();return {...value,remote:true,rate:row.tauxDevise,mode:row.modePaiement,treasury:row.keyTresorie,remittanceDate:row.dateRemiseBanque,remittanceId:row.keyRemiseSys,accountingReference:row.refCompta,observation:row.observation,unpaidReason:row.motifImpaye,advanceRemaining:row.resteAvance,
+ allocations:row.allocations.map((a,index)=>{if(typeof a.keyFacture!=="string"||!Number.isFinite(a.montant)||typeof a.devise!=="string")throw invalid();return {id:`${a.keyFacture}-${index}`,invoiceId:a.keyFacture,amount:a.montant,currency:a.devise,side:enumValue(a.sens,["Vente","Achat"])};})};};
+export function createPaymentsService({request,timeoutMs=15000}){
+ const path=id=>`/api/v1/reglements/${key(id)}`;
+  const call = async (url, { signal, method = "GET", body, expected = 200, readOnly = false } = {}) => {
+    const controller = new AbortController(), abort = () => controller.abort();
+    if (signal?.aborted) controller.abort(); else signal?.addEventListener("abort", abort, { once: true });
+    let timedOut = false; const timer = setTimeout(() => { timedOut = true; controller.abort(); }, timeoutMs);
+    const writing = method !== "GET" && !readOnly;
+    try {
+      const response = await request(url, { method, signal: controller.signal, headers: { Accept: "application/json", ...(body === undefined ? {} : { "Content-Type": "application/json" }) }, ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
+      if (!response.ok) {
+        if (writing && response.status >= 500) throw uncertain();
+        let problem; try { problem = await response.json(); } catch { problem = {}; }
+        const rule = rules[problem?.rule];
+        throw new PaymentsApiError(rule || (response.status === 404 ? "missing" : response.status === 409 ? "conflict" : response.status === 400 || response.status === 422 ? "validation" : response.status === 403 ? "forbidden" : "unavailable"),
+          rule ? rule : response.status === 404 ? "Ce règlement ou cette référence n’est plus disponible. Actualisez la liste." : response.status === 409 ? "Cette opération entre en conflit avec les données actuelles." : response.status === 400 || response.status === 422 ? "Les données ont été refusées par le serveur. Vérifiez les champs et les règles métier." : response.status === 403 ? "Vous n’avez pas l’autorisation d’effectuer cette action." : "Le service Règlements est indisponible. Réessayez.");
+      }
+      if (response.status !== expected) throw invalid();
+      if (expected === 204) return null;
+      const text = await response.text(); if (!text.trim()) throw invalid();
+      try { return JSON.parse(text); } catch { throw invalid(); }
+    } catch (error) {
+      if (signal?.aborted) throw new DOMException("Annulé", "AbortError");
+      if (error instanceof AuthenticationError) throw new PaymentsApiError(error.code, error.message);
+      if (error instanceof PaymentsApiError && !(writing && error.code === "invalid_response")) throw error;
+      if (writing) throw uncertain();
+      if (timedOut) throw new PaymentsApiError("timeout", "Le serveur met trop de temps à répondre. Réessayez.");
+      throw new PaymentsApiError("network", "Impossible de joindre le serveur. Vérifiez votre connexion puis réessayez.");
+    } finally { clearTimeout(timer); signal?.removeEventListener("abort", abort); }
+  };
+
+ const get=async(id,{signal}={})=>{const row=detail(await call(path(id),{signal}));if(row.id!==id)throw invalid();return row;};
+ const mutate=async(id,suffix,method,body,signal,expected=200)=>{const value=await call(id?path(id)+suffix:"/api/v1/reglements",{method,body,signal,expected});let row;try{row=detail(value);if(id&&row.id!==id)throw invalid();}catch{throw uncertain();}return {updatedId:row.id,row};};
+ const references=async({signal,treasuryOnly=false}={})=>{if(treasuryOnly){const rows=await call("/api/v1/reference/tresoreries",{signal});if(!Array.isArray(rows)||rows.some(row=>typeof row.keyTresorie!=="string"))throw invalid();return {treasuries:rows.map(row=>({id:row.keyTresorie,label:row.libelleTresorie||row.keyTresorie}))};}const [modes,treasuries,currencies,company]=await Promise.all(["modes-paiement","tresoreries","devises","societe"].map(part=>call(`/api/v1/reference/${part}`,{signal})));if(!Array.isArray(modes)||!Array.isArray(treasuries)||!Array.isArray(currencies)||typeof company?.deviseSoc!=="string"||modes.some(row=>typeof row.modePaiementCode!=="string")||treasuries.some(row=>typeof row.keyTresorie!=="string")||currencies.some(row=>typeof row.codeDevise!=="string"))throw invalid();return {modes:modes.map(row=>({id:row.modePaiementCode,label:row.modePaiementCode})),treasuries:treasuries.map(row=>({id:row.keyTresorie,label:row.libelleTresorie||row.keyTresorie})),currencies:currencies.map(row=>row.codeDevise),companyCurrency:company.deviseSoc};};
+ return {serverPaging:true,get,references,
+ async list({search="",type="",party="",status="",page=1,size=5,signal}={}){if(!Number.isInteger(page)||page<1||![5,10,20].includes(size))throw invalid();if(type)enumValue(type,paymentTypes);if(status)enumValue(status,paymentStatuses);const base={parties:[],modes:[],treasuries:[],invoices:[]};
+ const params=new URLSearchParams({page:String(page),pageSize:String(size)});if(search.trim())params.set("search",search.trim());if(type)params.set("type",String(paymentTypes.indexOf(type)));if(party.trim())params.set("tiers",party.trim());if(status)params.set("statut",String(paymentStatuses.indexOf(status)));const rows=await call(`/api/v1/reglements?${params}`,{signal});if(!rows||!Array.isArray(rows.items)||rows.page!==page||rows.pageSize!==size||!Number.isSafeInteger(rows.totalCount)||rows.totalCount<rows.items.length||rows.items.length>size)throw invalid();return {...base,...rows,payments:rows.items.map(summary)};},
+ async create(value,{signal}={}){const refs=await references({signal});enumValue(value.type,paymentTypes);if(!value.partyId?.trim())throw new PaymentError("Renseignez la clé du tiers.");if(!refs.currencies.includes(value.currency))throw new PaymentError("Sélectionnez une devise disponible.");const mode=value.mode==null?"":typeof value.mode==="string"?value.mode.trim():null;if(mode===null||(mode&&!refs.modes.some(row=>row.id===mode)))throw new PaymentError("Sélectionnez un mode de paiement disponible.");if(!["in","out"].includes(value.direction)||typeof value.advance!=="boolean"||value.advance&&value.direction!=="in")throw new PaymentError("Vérifiez le sens du règlement et de l’avance.");const rate=num(value.rate,true);if(value.dueDate&&value.dueDate<value.date)throw new PaymentError("Vérifiez les dates d’opération et d’échéance.");return mutate(null,"","POST",{typeReglement:paymentTypes.indexOf(value.type),keyTiers:value.partyId.trim(),devise:value.currency,montantDevise:num(value.amount,true)*(value.direction==="out"?-1:1),tauxDevise:rate,modePaiement:mode||null,referencePaiement:value.reference?.trim()||null,observation:value.observation?.trim()||null,dateOperation:date(value.date),dateEcheance:value.dueDate?date(value.dueDate):null,isAvance:value.advance},signal,201);},
+ async allocate(id,value,{signal}={}){const amount=num(value.amount,true);if(!value.invoiceId?.trim())throw new PaymentError("Renseignez la clé de facture.");const current=await get(id,{signal});if(current.allocations.some(row=>row.invoiceId===value.invoiceId.trim()))throw new PaymentError("Cette facture est déjà affectée à ce règlement.");const side=value.side||"Vente";enumValue(side,["Vente","Achat"]);const body={keyFacture:value.invoiceId.trim(),montant:amount,sens:["Vente","Achat"].indexOf(side),rasIsGlobal:num(value.rasIsGlobal??0),netAPayerGlobal:num(value.netAPayerGlobal??0)};const result=await call(path(id)+"/allocations",{method:"POST",body,signal});if(!result||!["allocated","montantMad","ecart"].every(field=>Number.isFinite(result[field]))||result.allocated!==amount||!([0,1,2,"Automatique","ManuelRequis","Refuse"].includes(result.ecartDecision)))throw uncertain();return {updatedId:id,allocationResult:result};},
+ deallocate:(id,value,{signal}={})=>mutate(id,`/allocations/${key(value.invoiceId)}`,"DELETE",undefined,signal),
+ remit:(id,value,{signal}={})=>{key(value.treasury);const params=new URLSearchParams({keyTresorie:value.treasury,dateRemise:date(value.date)});if(value.reference?.trim())params.set("refCompta",value.reference.trim());return mutate(id,`/remise?${params}`,"POST",undefined,signal);},
+ unpaid:(id,value,{signal}={})=>{if(!value.reason?.trim())throw new PaymentError("Le motif d’impayé est obligatoire.");const params=new URLSearchParams({motif:value.reason.trim()});if(value.comment?.trim())params.set("commentaire",value.comment.trim());return mutate(id,`/impaye?${params}`,"POST",undefined,signal);}
+ };
+}

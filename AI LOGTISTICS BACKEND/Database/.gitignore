@@ -1,0 +1,4 @@
+# Native backups can contain confidential application data. Keep them local.
+Backups/*.bak
+Tools/**/bin/
+Tools/**/obj/

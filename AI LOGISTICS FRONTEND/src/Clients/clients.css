@@ -1,0 +1,27 @@
+.clients-page { display: grid; gap: var(--ds-spacing-grid-y); margin: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); min-width: 0; }
+.clients-header, .clients-toolbar { display: flex; flex-wrap: wrap; gap: var(--ds-spacing-grid-y); padding: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); }
+.clients-header { align-items: center; }
+.clients-header-actions { margin-left: auto; display: flex; flex-wrap: wrap; gap: var(--ds-spacing-grid-x); }
+.clients-page h1, .clients-dialog h3 { font-size: inherit; font-weight: inherit; margin: 0; }
+.clients-page p, .clients-dialog p { margin: var(--ds-spacing-grid-x) 0 0; overflow-wrap: anywhere; }
+.clients-toolbar { align-items: end; }
+.clients-search { flex: 2; min-width: min(100%, calc(6 * var(--ds-spacing-lg))); }
+.clients-filter { flex: 1; min-width: min(100%, calc(6 * var(--ds-spacing-lg))); }
+.clients-list { min-width: 0; }
+.clients-table .ds-table { min-width: calc(32 * var(--ds-spacing-lg)); }
+.clients-table td { overflow-wrap: anywhere; }
+.clients-row-actions { display: flex; flex-wrap: wrap; gap: var(--ds-spacing-grid-x); min-width: calc(7 * var(--ds-spacing-lg)); }
+.clients-table .ds-button { text-align: left; }
+.clients-footer, .clients-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-spacing-grid-x); }
+.clients-footer { gap: var(--ds-spacing-grid-y); }
+.clients-footer p { margin: 0; font-family: var(--ds-typography-widget); }
+.clients-form, .clients-detail, .clients-confirmation { display: grid; gap: var(--ds-spacing-grid-y); min-width: 0; }
+.clients-form fieldset { margin: 0; padding: 0; min-width: 0; border: 0; }
+.clients-form legend { margin-bottom: var(--ds-spacing-grid-y); }
+.clients-fields { display: flex; flex-wrap: wrap; gap: var(--ds-spacing-grid-y); margin-top: var(--ds-spacing-grid-y); }
+.clients-fields > * { flex: 1; min-width: min(100%, calc(8 * var(--ds-spacing-lg))); }
+.clients-detail dl { margin-bottom: 0; }
+.clients-detail dd { margin: var(--ds-spacing-grid-x) 0 0; overflow-wrap: anywhere; }
+.clients-detail-table { max-width: 100%; min-width: 0; }
+.clients-detail-table .ds-table { min-width: calc(24 * var(--ds-spacing-lg)); }
+.clients-dialog { overflow-wrap: anywhere; }

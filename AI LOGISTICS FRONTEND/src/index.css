@@ -1,0 +1,10 @@
+@font-face { font-family: 'Inter Variable'; src: url('/fonts/logistics-reference/InterVariable-100.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Berkeley Mono'; src: url('/fonts/logistics-reference/BerkeleyMono-100.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+:root { color-scheme: dark; font-family: 'Inter Variable', sans-serif; background: #08090a; color: #f7f8f8; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Inter Variable', sans-serif; background: #08090a; color: #f7f8f8; font-size: 13px; line-height: 1.5; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+::selection { background: #5e6ad2; color: #ffffff; }
+html { scrollbar-color: #3e3e44 #08090a; }
+code, pre { font-family: 'Berkeley Mono', monospace; }

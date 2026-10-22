@@ -1,0 +1,33 @@
+# Build context trimming for the API image.
+
+## Build output.
+**/bin/
+**/obj/
+**/.vs/
+**/.idea/
+**/TestResults/
+**/*.user
+**/*.suo
+
+## The legacy VB application is not part of the API image. It lives outside this build context
+## (the context is AI LOGTISTICS BACKEND), so there is no pattern for it here — a ".." pattern has
+## no meaning in .dockerignore and is silently ignored.
+
+## Local overrides and secrets.
+**/appsettings.Local.json
+**/*.pfx
+**/*.snk
+
+## Repo furniture.
+.git/
+.gitignore
+**/*.md
+docker-compose.yml
+
+## NOTE: NuGet.config is deliberately NOT excluded. The first restore runs before `COPY . .`, so it
+## never sees this file and uses the default feed; the copy afterwards is what makes the offline
+## configuration visible to later steps, which is why publish runs with --no-restore.
+
+## NOTE: the Dockerfile itself is not excluded. Compose references it by path
+## (src/Logistics.Api/Dockerfile), and an ignore pattern of `Dockerfile` would only match a file at
+## the context root — excluding it here would be a silent no-op that reads like a safeguard.

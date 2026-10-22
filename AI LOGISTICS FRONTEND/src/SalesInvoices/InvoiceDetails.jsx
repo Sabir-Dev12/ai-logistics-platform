@@ -1,0 +1,17 @@
+import PropTypes from "prop-types";
+import { Alert, Badge, Button, EmptyState, Input, Table } from "../design-system";
+import InvoiceTotals from "./InvoiceTotals";
+import { money, natureLabels, round } from "./invoiceRules";
+export default function InvoiceDetails({ invoice, busy, onAction }) {
+  const recap = invoice.remote?invoice.recap:Object.values(invoice.lines.reduce((groups, line) => { const key = line.vatRate; groups[key] ||= { id: key, rate: Number(key), ht: 0, vat: 0 }; groups[key].ht += line.ht; groups[key].vat += line.vat; return groups; }, {}));
+  return <div className="bookings-detail"><div className="bookings-actions"><Badge>{invoice.type}</Badge><Badge variant={invoice.settled ? "success" : "warning"}>{invoice.settled ? "Réglée" : "Non réglée"}</Badge><Badge>{invoice.status}</Badge></div><h3>{invoice.number}</h3>
+    <div className="bookings-fields">{[["Client", invoice.clientName], ["Référence", invoice.id], ["Date de facture", invoice.date], ["Date d’échéance", invoice.dueDate], ["Dossier associé", invoice.dossier], ["Voyage associé", invoice.voyage], ["Nature du service", invoice.service], ["Devise", invoice.currency], ["Taux facture vers MAD", invoice.rate], [`Montant réglé (${invoice.currency})`, money(invoice.paid)], [invoice.remote?"Solde (serveur)":`Solde (${invoice.currency})`, money(invoice.remote?invoice.outstanding:round(invoice.totals.net - invoice.paid))]].map(([label, value]) => <Input label={label} key={label} readOnly value={value ?? "—"} />)}</div>
+    {invoice.comment && <p>{invoice.comment}</p>}{invoice.sourceNumber && <Alert title="Facture d’origine">{invoice.sourceNumber}</Alert>}{invoice.creditNumber && <Alert title="Dernier avoir total créé">{invoice.creditNumber}</Alert>}
+    {invoice.exemption && <Alert title="Exonération enregistrée">{invoice.exemption}</Alert>}
+    <InvoiceTotals invoice={invoice} totals={invoice.totals} />
+    <Table caption="Lignes de facture" className="bookings-detail-table" rows={invoice.lines} columns={[{ key: "label", header: "Libellé" }, { key: "nature", header: "Nature", render: (value) => natureLabels[value] }, { key: "gross", header: "Brut ligne", render: money }, { key: "discount", header: "Remise (%)" }, { key: "net", header: "Net ligne", render: money }, { key: "rate", header: "Taux MAD" }, { key: "ht", header: "HT (MAD)", render: money }, { key: "vatRate", header: "TVA (%)" }, { key: "vat", header: "TVA (MAD)", render: value=>value==null?"Non fourni":money(value) }]} emptyState={<EmptyState title="Aucune ligne de facture" />} />
+    <Table caption="Récapitulatif TVA des lignes" className="bookings-detail-table" rows={recap} columns={[{ key: "rate", header: "TVA (%)" }, { key: "ht", header: "Base HT (MAD)", render: money }, { key: "vat", header: "TVA (MAD)", render: value=>value==null?"Non fourni":money(value) }]} emptyState={<EmptyState title="Aucune TVA" />} />
+    <div className="bookings-actions"><Button disabled={busy} onClick={() => onAction("recalculate")}>Recalculer les montants</Button><Button disabled={busy || invoice.type !== "Facture" || invoice.needsRecalculation} onClick={() => onAction("credit")}>Créer un avoir total</Button><Button disabled={busy || !invoice.lines.some((line) => Number(line.vatRate) !== 0)} onClick={() => onAction("exempt")}>Appliquer une exonération</Button></div>
+  </div>;
+}
+InvoiceDetails.propTypes = { invoice: PropTypes.object.isRequired, busy: PropTypes.bool, onAction: PropTypes.func.isRequired };

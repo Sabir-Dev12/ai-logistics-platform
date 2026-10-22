@@ -1,0 +1,15 @@
+.mcp-page { display: grid; gap: var(--ds-spacing-grid-y); margin: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); min-width: 0; }
+.mcp-header { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-spacing-grid-y); padding: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); }
+.mcp-header h1, .mcp-details h3 { font-size: inherit; font-weight: inherit; margin: 0; }
+.mcp-header p { margin: var(--ds-spacing-grid-x) 0 0; }
+.mcp-refresh { margin-left: auto; }
+.mcp-toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: var(--ds-spacing-grid-y); padding: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); }
+.mcp-search { flex: 2; min-width: min(100%, calc(6 * var(--ds-spacing-lg))); }
+.mcp-filter { flex: 1; min-width: min(100%, calc(6 * var(--ds-spacing-lg))); }
+.mcp-catalogue { min-width: 0; }
+.mcp-table .ds-table { min-width: calc(30 * var(--ds-spacing-lg)); }
+.mcp-description { display: block; min-width: calc(7 * var(--ds-spacing-lg)); overflow-wrap: anywhere; }
+.mcp-page > p { margin: 0; }
+.mcp-details { display: grid; gap: var(--ds-spacing-grid-y); min-width: 0; overflow-wrap: anywhere; }
+.mcp-details p { margin: 0; }
+.mcp-json { font: inherit; white-space: pre-wrap; overflow-wrap: anywhere; margin: var(--ds-spacing-grid-x) 0 0; }

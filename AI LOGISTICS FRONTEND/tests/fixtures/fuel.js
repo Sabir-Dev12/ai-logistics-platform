@@ -1,0 +1,8 @@
+export const tankDto=(o={})=>({keyCiterne:"T1",intituleCiterne:"Citerne réelle",agence:"AG1",typeCiterne:"Gasoil",stock:1200,pmp:10,valeurStock:12000,indexCompteur:null,estConfreres:false,...o});
+export const issueDto=(o={})=>({keySortie:"I1",keyCiterne:"T1",dateSortie:"2026-10-10T08:00:00",typeCiterne:"Gasoil",typeSortie:"Sortie Gasoil",qteSortie:50,prixUnitaire:10,montantSortie:500,keyMateriel:"M1",keyChauffeur:"P1",keyVoyage:null,compteur:1000,plein:true,observation:null,supprime:false,...o});
+export const supplyDto=()=>({keyApprovisionnement:"A1",keyFournisseur:"F1",dateApprovisionnement:"2026-10-10T08:00:00",numBl:"BL1",qteTotale:100,montantApprovisionnement:1000,annulable:false,lignes:[{keyCiterne:"T1",qteCiterne:100,montantAlloue:1000}]});
+export const voucherDto=()=>({keyBon:"B1",keyFournisseur:"F1",dateBon:"2026-10-10T08:00:00",numBon:"BON1",qteBon:100,montantBon:1000,deviseBon:"EUR",typeCiterne:"Gasoil",keyMateriel:"M1",keyChauffeur:"P1",compteur:1000,plein:true});
+export const gaugeDto=()=>({keyJauge:"J1",keyCiterne:"T1",dateJauge:"2026-10-10T08:00:00",qteStock:1100,qteStockTheorique:1200,ecart:100});
+export const ratioDto=()=>({keyLigne:"R1",keyTracteur:"M1",dateDebut:"2026-10-01T08:00:00",dateFin:"2026-10-10T08:00:00",totalKm:1000,totalLitre:100,totalMontant:1000,coutKm:1,ratioConsommation:10});
+export const fuelPage=(items,page=1,size=5,total=items.length)=>({items,page,pageSize:size,totalCount:total});
+export const fuelValue=()=>({label:"Citerne réelle",agency:"AG1",product:"Gasoil",tankId:"T1",supplierId:"F1",equipmentId:"M1",driverId:"P1",voyage:"V1",quantity:100,amount:1000,date:"2026-10-10T08:00",meter:1000,full:true,note:"Note",reference:"BL1",currency:"EUR",lines:[{tankId:"T1",quantity:100}],password:"never-send"});

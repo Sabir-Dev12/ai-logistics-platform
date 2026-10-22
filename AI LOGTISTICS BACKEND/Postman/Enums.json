@@ -1,0 +1,508 @@
+{
+  "TokenRejection": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Malformed",
+      "value": 1
+    },
+    {
+      "name": "BadSignature",
+      "value": 2
+    },
+    {
+      "name": "Expired",
+      "value": 3
+    }
+  ],
+  "ReferentialKind": [
+    {
+      "name": "Pays",
+      "value": 0
+    },
+    {
+      "name": "Devise",
+      "value": 1
+    },
+    {
+      "name": "Ville",
+      "value": 2
+    },
+    {
+      "name": "Port",
+      "value": 3
+    },
+    {
+      "name": "Incoterm",
+      "value": 4
+    },
+    {
+      "name": "ZonePays",
+      "value": 5
+    },
+    {
+      "name": "Agence",
+      "value": 6
+    },
+    {
+      "name": "ModePaiement",
+      "value": 7
+    },
+    {
+      "name": "CompteTva",
+      "value": 8
+    },
+    {
+      "name": "ClasseClient",
+      "value": 9
+    },
+    {
+      "name": "StatutClient",
+      "value": 10
+    },
+    {
+      "name": "Risque",
+      "value": 11
+    },
+    {
+      "name": "SecteurActivite",
+      "value": 12
+    },
+    {
+      "name": "GroupeSociete",
+      "value": 13
+    },
+    {
+      "name": "Tresorie",
+      "value": 14
+    },
+    {
+      "name": "NatureFraisBancaire",
+      "value": 15
+    },
+    {
+      "name": "TypeIncidentPaiement",
+      "value": 16
+    }
+  ],
+  "TrackingEntity": [
+    {
+      "name": "Client",
+      "value": 0
+    },
+    {
+      "name": "Voyage",
+      "value": 1
+    },
+    {
+      "name": "Dossier",
+      "value": 2
+    },
+    {
+      "name": "FactureVente",
+      "value": 3
+    },
+    {
+      "name": "Reglement",
+      "value": 4
+    },
+    {
+      "name": "Booking",
+      "value": 5
+    },
+    {
+      "name": "Cotation",
+      "value": 6
+    }
+  ],
+  "Sens": [
+    {
+      "name": "Import",
+      "value": 0
+    },
+    {
+      "name": "Export",
+      "value": 1
+    },
+    {
+      "name": "National",
+      "value": 2
+    }
+  ],
+  "TypeReglement": [
+    {
+      "name": "Client",
+      "value": 0
+    },
+    {
+      "name": "Fournisseur",
+      "value": 1
+    },
+    {
+      "name": "Etrangers",
+      "value": 2
+    },
+    {
+      "name": "Personnel",
+      "value": 3
+    }
+  ],
+  "NatureReglement": [
+    {
+      "name": "Reglement",
+      "value": 0
+    },
+    {
+      "name": "Avance",
+      "value": 1
+    }
+  ],
+  "StatutReglement": [
+    {
+      "name": "Saisie",
+      "value": 0
+    },
+    {
+      "name": "Portefeuille",
+      "value": 1
+    },
+    {
+      "name": "RemisEnBanque",
+      "value": 2
+    },
+    {
+      "name": "RemisAuFournisseur",
+      "value": 3
+    },
+    {
+      "name": "Signe",
+      "value": 4
+    },
+    {
+      "name": "Regle",
+      "value": 5
+    },
+    {
+      "name": "Impaye",
+      "value": 6
+    }
+  ],
+  "SensReglement": [
+    {
+      "name": "Vente",
+      "value": 0
+    },
+    {
+      "name": "Achat",
+      "value": 1
+    }
+  ],
+  "TypeLettrage": [
+    {
+      "name": "T",
+      "value": 0
+    },
+    {
+      "name": "P",
+      "value": 1
+    }
+  ],
+  "TypeTresorie": [
+    {
+      "name": "Banque",
+      "value": 0
+    },
+    {
+      "name": "Caisse",
+      "value": 1
+    }
+  ],
+  "PeriodiciteReleve": [
+    {
+      "name": "Aucune",
+      "value": 0
+    },
+    {
+      "name": "Hebdomadaire",
+      "value": 1
+    },
+    {
+      "name": "Quinzaine",
+      "value": 2
+    },
+    {
+      "name": "Mensuel",
+      "value": 3
+    }
+  ],
+  "SensFinancier": [
+    {
+      "name": "Encaissement",
+      "value": 0
+    },
+    {
+      "name": "Decaissement",
+      "value": 1
+    }
+  ],
+  "StatutDeclarationTva": [
+    {
+      "name": "AttenteDeclaration",
+      "value": 0
+    },
+    {
+      "name": "Prepare",
+      "value": 1
+    },
+    {
+      "name": "Declare",
+      "value": 2
+    }
+  ],
+  "TypeTiers": [
+    {
+      "name": "Client",
+      "value": 0
+    },
+    {
+      "name": "Fournisseur",
+      "value": 1
+    },
+    {
+      "name": "Agent",
+      "value": 2
+    },
+    {
+      "name": "Tiers",
+      "value": 3
+    }
+  ],
+  "NatureLigne": [
+    {
+      "name": "Produit",
+      "value": 0
+    },
+    {
+      "name": "Debours",
+      "value": 1
+    },
+    {
+      "name": "Assigne",
+      "value": 2
+    },
+    {
+      "name": "TaxeRegionale",
+      "value": 3
+    },
+    {
+      "name": "Charge",
+      "value": 4
+    }
+  ],
+  "NatureRepartition": [
+    {
+      "name": "Vente",
+      "value": 0
+    },
+    {
+      "name": "Achat",
+      "value": 1
+    },
+    {
+      "name": "Fp",
+      "value": 2
+    }
+  ],
+  "EcartDecision": [
+    {
+      "name": "Automatique",
+      "value": 0
+    },
+    {
+      "name": "ManuelRequis",
+      "value": 1
+    },
+    {
+      "name": "Refuse",
+      "value": 2
+    }
+  ],
+  "StatutBareme": [
+    {
+      "name": "NonValide",
+      "value": 0
+    },
+    {
+      "name": "Valide",
+      "value": 1
+    },
+    {
+      "name": "Supprime",
+      "value": 2
+    }
+  ],
+  "TypeBareme": [
+    {
+      "name": "Complet",
+      "value": 0
+    },
+    {
+      "name": "Groupage",
+      "value": 1
+    }
+  ],
+  "FluxBareme": [
+    {
+      "name": "National",
+      "value": 0
+    },
+    {
+      "name": "International",
+      "value": 1
+    }
+  ],
+  "TypeUtilisation": [
+    {
+      "name": "Montant",
+      "value": 0
+    },
+    {
+      "name": "Pourcentage",
+      "value": 1
+    }
+  ],
+  "TypeCiterne": [
+    {
+      "name": "Gasoil",
+      "value": 0
+    },
+    {
+      "name": "AdBlue",
+      "value": 1
+    }
+  ],
+  "StatutMateriel": [
+    {
+      "name": "Disponible",
+      "value": 0
+    },
+    {
+      "name": "EnReparation",
+      "value": 1
+    },
+    {
+      "name": "Sorti",
+      "value": 2
+    }
+  ],
+  "ProduitGasoil": [
+    {
+      "name": "Gasoil",
+      "value": 0
+    },
+    {
+      "name": "AdBlue",
+      "value": 1
+    }
+  ],
+  "NatureVoyage": [
+    {
+      "name": "Complet",
+      "value": 0
+    },
+    {
+      "name": "Groupage",
+      "value": 1
+    },
+    {
+      "name": "GroupageConfrere",
+      "value": 2
+    }
+  ],
+  "CategorieVoyage": [
+    {
+      "name": "International",
+      "value": 0
+    },
+    {
+      "name": "Previsionnel",
+      "value": 1
+    },
+    {
+      "name": "Enlevement",
+      "value": 2
+    },
+    {
+      "name": "Autre",
+      "value": 3
+    },
+    {
+      "name": "Mead",
+      "value": 4
+    }
+  ],
+  "StatutReception": [
+    {
+      "name": "Receptionne",
+      "value": 0
+    },
+    {
+      "name": "AttenteReception",
+      "value": 1
+    }
+  ],
+  "StatutFacturation": [
+    {
+      "name": "ANePasFacturer",
+      "value": 0
+    },
+    {
+      "name": "NonFacture",
+      "value": 1
+    },
+    {
+      "name": "Facture",
+      "value": 2
+    }
+  ],
+  "StatutClotureDossier": [
+    {
+      "name": "Encours",
+      "value": 0
+    },
+    {
+      "name": "Cloture",
+      "value": 1
+    }
+  ],
+  "TypeEquipement": [
+    {
+      "name": "Remorque",
+      "value": 0
+    },
+    {
+      "name": "Tracteur",
+      "value": 1
+    },
+    {
+      "name": "Caisse",
+      "value": 2
+    },
+    {
+      "name": "Lcl",
+      "value": 3
+    }
+  ],
+  "LieuDepotage": [
+    {
+      "name": "Remorque",
+      "value": 0
+    },
+    {
+      "name": "Tc",
+      "value": 1
+    }
+  ]
+}

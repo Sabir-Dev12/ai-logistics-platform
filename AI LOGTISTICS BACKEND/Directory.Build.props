@@ -1,0 +1,36 @@
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+
+    <!--
+      InvariantGlobalization must stay OFF. Turning it on makes
+      Microsoft.Data.SqlClient throw CultureNotFoundException when it opens a connection
+      ("Only the invariant culture is supported in globalization-invariant mode"), so the
+      database becomes unreachable. It is not worth the few KB it saves.
+    -->
+    <InvariantGlobalization>false</InvariantGlobalization>
+
+    <!--
+      Sandbox constraint: Roslyn's shared compiler server (VBCSCompiler.exe) and MSBuild's
+      out-of-process worker nodes communicate over Windows NAMED PIPES, which the DSH file
+      sandbox denies. Without these two switches a build dies with a bare "build FAILED /
+      0 Error(s)" and the underlying cause only appears in a diagnostic log:
+
+          UnauthorizedAccessException: Access to the path is denied.
+             at System.IO.Pipes.NamedPipeClientStream.TryConnect(...)
+          CompilerServer: server failed - cannot connect to the server
+
+      Forcing in-process compilation and a single node removes the named-pipe dependency
+      entirely. Keep these settings; they are behavioural, not cosmetic.
+    -->
+    <UseSharedCompilation>false</UseSharedCompilation>
+    <BuildInParallel>false</BuildInParallel>
+    <MSBuildDisableNodeReuse>true</MSBuildDisableNodeReuse>
+  </PropertyGroup>
+
+</Project>

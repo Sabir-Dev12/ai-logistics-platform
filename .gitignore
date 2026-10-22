@@ -1,0 +1,41 @@
+# Dependencies and generated output
+**/node_modules/
+**/bin/
+**/obj/
+**/dist/
+**/dist-ssr/
+**/.build-tmp/
+**/.vite/
+**/artifacts/
+**/coverage/
+**/TestResults/
+**/test-results/
+**/playwright-report/
+**/.vs/
+**/.idea/
+*.log
+*.user
+*.suo
+
+# Local configuration, tokens and documents
+**/.env
+**/.env.*
+!**/.env.example
+**/appsettings.Local.json
+**/appsettings.*.Local.json
+**/App_Data/
+**/.aws/
+**/.codex/
+**/.agents/
+*.pfx
+*.pem
+*.key
+*.snk
+
+# Database data, backups and private archives
+*.bak
+*.mdf
+*.ldf
+*.ndf
+*.zip
+.DS_Store

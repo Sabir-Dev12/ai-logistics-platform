@@ -1,0 +1,28 @@
+import { useCallback, useState } from "react";
+import PropTypes from "prop-types";
+import { Button, EmptyState, ErrorState, Input, LoadingState, Select } from "../design-system";
+import BookingReferencePicker from "../Bookings/BookingReferencePicker";
+import { useBookingResource } from "../Bookings/useBookingResource";
+import { shipmentTypes, validateShipment } from "./shipmentRules";
+export default function ShipmentForm({ row, clients, busy, blocked, error, onSubmit, onCancel, repository, unload = false }) {
+  const [value, setValue] = useState(() => unload ? { dateDepotage: new Date().toISOString().slice(0, 10), lieuDepotage: "Remorque", colisDepote: row.nbColis ?? 0, refDepotage: "", constatDepotage: "" }
+    : { numDossier: row?.numDossier || "", typeDossier: row?.typeDossier || "RI", keyClient: row?.keyClient || "", descriptionMarchandise: row?.descriptionMarchandise || "", nbColis: row?.nbColis ?? "", poidsBrut: row?.poidsBrut ?? "", poidsTaxable: row?.poidsTaxable ?? "", volume: row?.volume ?? "", magasinDouane: row?.magasinDouane || "", incoterm: row?.incoterm || "" });
+  const loadTypes=useCallback(signal=>repository&&!unload?repository.types({signal}):Promise.resolve(shipmentTypes),[repository,unload]);
+  const types=useBookingResource(loadTypes),options=repository?types.value||[]:shipmentTypes;
+  const [validation, setValidation] = useState("");
+  const change = (key) => (event) => { setValue((current) => ({ ...current, [key]: event.target.value })); setValidation(""); };
+  const submit = (event) => { event.preventDefault(); if (busy || blocked) return; if (!unload) { try { if(repository){if(!value.numDossier.trim())throw new Error("Le numéro de dossier est obligatoire.");if(!options.some(type=>type.value===value.typeDossier))throw new Error("Sélectionnez un type de dossier.");for(const key of ["nbColis","poidsBrut","poidsTaxable","volume"])if(value[key]!==""&&value[key]!=null&&(!Number.isFinite(Number(value[key]))||Number(value[key])<0))throw new Error("Les mesures doivent être des nombres positifs ou nuls.");}else validateShipment(value); } catch (failure) { setValidation(failure.message); return; } } if(unload && (!value.dateDepotage || value.colisDepote==="" || !Number.isFinite(Number(value.colisDepote)) || Number(value.colisDepote)<0)){setValidation("Vérifiez la date et le nombre de colis dépotés.");return;} void onSubmit(value); };
+  const fields = unload ? [["dateDepotage", "Date de dépotage", "date"], ["colisDepote", "Colis dépotés", "number"], ["refDepotage", "Référence de dépotage"], ["constatDepotage", "Constat de dépotage"]]
+    : [["numDossier", "Numéro de dossier"], ["descriptionMarchandise", "Description de la marchandise"], ["nbColis", "Nombre de colis", "number"], ["poidsBrut", "Poids brut (kg)", "number"], ["poidsTaxable", "Poids taxable (kg)", "number"], ["volume", "Volume (m³)", "number"], ["magasinDouane", "Magasin de douane", "text"], ["incoterm", "Incoterm"]];
+  return <form className="bookings-form" onSubmit={submit} noValidate><fieldset disabled={busy}><legend>{unload ? "Dépotage du dossier MEAD" : "Informations du dossier"}</legend><div className="bookings-fields">
+    {!unload && <><Select label="Type de dossier" value={value.typeDossier} onChange={change("typeDossier")}>{repository && !options.some(type=>type.value===value.typeDossier)&&<option value={value.typeDossier}>{value.typeDossier}</option>}{options.map((type) => <option key={type.value} value={type.value}>{type.label}</option>)}</Select>
+      {repository ? <BookingReferencePicker repository={repository} kind="clients" label="Client du dossier" placeholder="Non renseigné" value={value.keyClient} onChange={(id,label)=>setValue(current=>({...current,keyClient:id,intituleClient:label}))}/> : <Select label="Client du dossier" value={value.keyClient} onChange={change("keyClient")}><option value="">Non renseigné</option>{clients.map((client) => <option key={client.id} value={client.id}>{client.label}</option>)}</Select>}</>}
+    {repository && !unload && types.phase==="loading" && <LoadingState label="Chargement des types…" />}
+    {repository && !unload && types.phase==="error" && <ErrorState message={types.error} onRetry={types.retry} />}
+    {repository && !unload && types.phase==="ready" && !options.length && <EmptyState title="Aucun type de dossier disponible" />}
+    {unload && <Select label="Lieu de dépotage" value={value.lieuDepotage} onChange={change("lieuDepotage")}><option value="Remorque">Remorque</option><option value="Tc">Conteneur (TC)</option></Select>}
+    {fields.map(([key, label, type = "text"]) => <Input key={key} label={label} type={type} value={value[key]} onChange={change(key)} required={key === "numDossier" || key === "dateDepotage" || key === "colisDepote"} min={type === "number" ? 0 : undefined} step={type === "number" ? "any" : undefined} hint={key === "magasinDouane" ? "Renseigner ce champ place le dossier dans le parcours MEAD." : undefined} />)}
+  </div></fieldset>{(validation || error) && <ErrorState message={validation || error} />}<div className="bookings-actions"><Button disabled={busy} onClick={onCancel}>Annuler</Button><Button type="submit" variant="primary" disabled={blocked || (repository && !unload && (types.phase!=="ready" || !options.length))} loading={busy}>{unload ? "Enregistrer le dépotage" : "Enregistrer le dossier"}</Button></div></form>;
+}
+ShipmentForm.propTypes = { row: PropTypes.object, clients: PropTypes.array.isRequired, busy: PropTypes.bool, blocked:PropTypes.bool,repository:PropTypes.object,error: PropTypes.string, onSubmit: PropTypes.func.isRequired, onCancel: PropTypes.func.isRequired, unload: PropTypes.bool };
+

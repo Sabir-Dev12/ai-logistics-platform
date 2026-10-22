@@ -1,0 +1,174 @@
+{
+  "info": {
+    "name": "Logistics API — authentification & premiers appels",
+    "description": "Collection pour tester l'API contre votre base locale (SQL Express, authentification Windows).\n\nOrdre d'exécution : lancez la requête 1 en premier — elle enregistre le jeton dans la variable de collection `token`, que les requêtes suivantes utilisent automatiquement.\n\nSi la requête 1 renvoie 503 `database_unavailable`, le problème est la connexion à la base, pas le mot de passe. Si elle renvoie 401, c'est le mot de passe : voyez la requête 5.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5192",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Obtenir un jeton (admin)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "const corps = pm.response.json();",
+              "pm.test('un accessToken est renvoye', () => {",
+              "    pm.expect(corps.accessToken).to.be.a('string').and.not.empty;",
+              "});",
+              "pm.test('la societe est S01', () => pm.expect(corps.societeKey).to.eql('S01'));",
+              "",
+              "// Enregistre le jeton pour les requetes suivantes.",
+              "pm.collectionVariables.set('token', corps.accessToken);",
+              "console.log('jeton expire le', corps.expiresAt);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"identifiant\": \"admin\",\n  \"motDePasse\": \"Admin123!\",\n  \"societeKey\": \"S01\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/auth/token",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "auth",
+            "token"
+          ]
+        },
+        "description": "Authentifie un employe : `identifiant_app` + `pass_word` verifie contre `t_personnel`.\n\nLe mot de passe depend de l'origine de la base :\n- base creee avec Database/Scripts/Seed-TestData.sql  ->  Admin123!   (pass_word = 28258971)\n- base existante conservee                            ->  Admin12c!   (pass_word = 28259067)\n\n`agenceKey` est un 4e champ optionnel."
+      },
+      "response": []
+    },
+    {
+      "name": "2. Lister les clients (avec jeton)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/clients?page=1&pageSize=20",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "clients"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "pageSize",
+              "value": "20"
+            }
+          ]
+        },
+        "description": "Requiert le jeton. Sans en-tete Authorization, la reponse est 401 — c'est voulu : les 159 operations de l'API refusent un appelant non authentifie."
+      },
+      "response": []
+    },
+    {
+      "name": "3. Sante — le processus vit",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health/live",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health",
+            "live"
+          ]
+        },
+        "description": "Anonyme par necessite : un orchestrateur n'a pas de jeton. Ne touche pas la base — 200 signifie seulement que le processus repond."
+      },
+      "response": []
+    },
+    {
+      "name": "4. Sante — la base repond",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health/ready",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health",
+            "ready"
+          ]
+        },
+        "description": "LE TEST A FAIRE EN PREMIER si vous avez un 503. Ce point verifie reellement la connexion a la base.\n\n200 = la base est jointe, le probleme est ailleurs.\n503 = la base est injoignable : c'est la connexion, pas les identifiants."
+      },
+      "response": []
+    },
+    {
+      "name": "5. Mot de passe faux (doit renvoyer 401)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"identifiant\": \"admin\",\n  \"motDePasse\": \"ceci-est-faux\",\n  \"societeKey\": \"S01\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/auth/token",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "auth",
+            "token"
+          ]
+        },
+        "description": "Controle negatif. Un 401 ici et un 401 sur la requete 1 signifient que la base repond mais que le mot de passe est le mauvais.\n\nUn 401 ici et un 503 sur la requete 1 signifieraient l'inverse (base injoignable) — impossible, donc si vous voyez cela, vous ne parlez pas au meme processus."
+      },
+      "response": []
+    }
+  ]
+}

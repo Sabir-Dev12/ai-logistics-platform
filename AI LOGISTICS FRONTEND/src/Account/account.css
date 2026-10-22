@@ -1,0 +1,9 @@
+.account-page { display: grid; gap: var(--ds-spacing-grid-y); margin: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); min-width: 0; }
+.account-header, .account-panel-header { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-spacing-grid-y); }
+.account-header, .account-panel { padding: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); min-width: 0; }
+.account-page h1, .account-page h2 { font-size: inherit; font-weight: inherit; margin: 0; }
+.account-page p { margin: var(--ds-spacing-grid-x) 0 0; overflow-wrap: anywhere; }
+.account-identity { display: flex; flex-wrap: wrap; gap: var(--ds-spacing-grid-y); margin-top: var(--ds-spacing-grid-y); }
+.account-identity > .ds-field { flex: 1; min-width: min(100%, calc(8 * var(--ds-spacing-lg))); }
+.account-form { display: grid; gap: var(--ds-spacing-grid-y); max-width: calc(20 * var(--ds-spacing-lg)); margin-top: var(--ds-spacing-grid-y); }
+.account-actions { display: flex; flex-wrap: wrap; gap: var(--ds-spacing-grid-x); margin-top: var(--ds-spacing-grid-y); }

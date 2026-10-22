@@ -1,0 +1,16 @@
+.agent-page { display: grid; min-width: 0; gap: var(--ds-spacing-grid-y); margin: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); }
+.agent-header, .agent-summary { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-spacing-grid-y); padding: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); }
+.agent-page h1, .agent-page h2, .agent-details h3 { font-size: inherit; font-weight: inherit; margin: 0; }
+.agent-header p { margin: var(--ds-spacing-grid-x) 0 0; }
+.agent-scenario { margin-left: auto; min-width: min(100%, calc(7 * var(--ds-spacing-lg))); }
+.agent-page > p, .agent-summary p, .agent-details p { margin: 0; }
+.agent-workspace { display: flex; flex-wrap: wrap; gap: var(--ds-spacing-grid-y); min-width: 0; }
+.agent-conversation { flex: 2; min-width: min(100%, calc(14 * var(--ds-spacing-lg))); display: flex; flex-direction: column; }
+.agent-conversation h2 { padding: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); }
+.agent-execution { flex: 1; min-width: min(100%, calc(9 * var(--ds-spacing-lg))); padding: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); }
+.agent-steps { display: grid; gap: var(--ds-spacing-grid-y); padding-left: var(--ds-spacing-lg); margin: var(--ds-spacing-grid-y) 0 0; }
+.agent-step-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-spacing-grid-x); margin-top: var(--ds-spacing-grid-x); }
+.agent-data { min-width: 0; }
+.agent-table .ds-table { min-width: calc(20 * var(--ds-spacing-lg)); }
+.agent-details { display: grid; gap: var(--ds-spacing-grid-y); min-width: 0; overflow-wrap: anywhere; }
+.agent-details pre { font: inherit; white-space: pre-wrap; overflow-wrap: anywhere; margin: var(--ds-spacing-grid-x) 0 0; }

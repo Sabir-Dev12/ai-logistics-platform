@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Logistics.Api</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      OpenAPI is produced by the framework itself on .NET 10 (Microsoft.AspNetCore.OpenApi).
+      Swashbuckle is deliberately NOT referenced: Swashbuckle.AspNetCore.SwaggerUI and
+      Microsoft.Extensions.ApiDescription.Server are not restorable in this offline environment
+      (their cached copies lack the .nupkg/.nupkg.metadata NuGet requires), and the built-in
+      generator is the supported path on .NET 10 anyway. Because Swagger UI ships from a CDN it
+      would not work offline either; the API explorer is served from an inline page instead
+      (see ApiExplorerHtml).
+    -->
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+    <PackageReference Include="ModelContextProtocol.AspNetCore" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Logistics.Application\Logistics.Application.csproj" />
+    <ProjectReference Include="..\Logistics.Infrastructure\Logistics.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

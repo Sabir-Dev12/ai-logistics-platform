@@ -1,0 +1,92 @@
+{
+  "source": "Clés/codes vérifiés en lecture seule dans LogisticsDb. Mots de passe initiaux provenant du script fourni par l'utilisateur, non vérifiés et potentiellement déjà changés.",
+  "connexion": {
+    "baseUrl": "http://localhost:5192",
+    "societeKey": "S01",
+    "agenceKey": "AG01"
+  },
+  "comptes": [
+    {
+      "identifiant": "admin",
+      "motDePasseInitial": "Admin123!",
+      "keyPersonnel": "P001",
+      "administrateur": true
+    },
+    {
+      "identifiant": "dupont",
+      "motDePasseInitial": "User123!",
+      "keyPersonnel": "P002",
+      "administrateur": false
+    }
+  ],
+  "clients": [
+    "CLI001",
+    "CLI002"
+  ],
+  "agences": [
+    "AG01",
+    "AG02"
+  ],
+  "typesDossierEtBooking": [
+    "I",
+    "E"
+  ],
+  "devises": [
+    "MAD",
+    "EUR",
+    "USD"
+  ],
+  "incoterms": [
+    "FOB",
+    "CIF",
+    "EXW"
+  ],
+  "ports": [
+    "MACAS",
+    "MAPTM"
+  ],
+  "classesClient": [
+    "A",
+    "B"
+  ],
+  "references_a_fournir": [
+    "codeRubrique",
+    "codeTva",
+    "modePaiement",
+    "typeMateriel",
+    "keyStatut",
+    "keyVoyage",
+    "keyDossier",
+    "keyBooking",
+    "keyCotation",
+    "keyFacture",
+    "keyReglement",
+    "keyBareme",
+    "keyFournisseur",
+    "keyMateriel",
+    "keyCiterne",
+    "keyTresorie",
+    "typeEquipement",
+    "keyStatutBooking",
+    "TypeBooking",
+    "keyAgent",
+    "keyCompagnie",
+    "keyApprovisionnement",
+    "keyBon",
+    "keySortie",
+    "keyAdresse",
+    "keyBanque",
+    "keyDocument",
+    "keyRegroupement",
+    "keyFonction",
+    "keyService",
+    "keyDepartement",
+    "TypeMateriel",
+    "keyTracteur",
+    "keyRemorque",
+    "keyChauffeur1",
+    "keyChauffeur2",
+    "keyTrajet"
+  ],
+  "note": "Les clés des nouveaux clients, voyages, dossiers, bookings, cotations, factures, règlements, barèmes, citernes, approvisionnements, bons, personnel et matériel sont récupérées par les scripts après un POST de création réussi. Les fournisseurs, modes de paiement, trésoreries, rubriques et taux TVA doivent aussi exister pour les opérations concernées. Aucun enregistrement n'a été créé par la préparation de ce pack."
+}

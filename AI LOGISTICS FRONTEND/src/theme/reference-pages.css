@@ -1,0 +1,75 @@
+/* Applied after dashboard verification: reuse the same reference tokens on existing pages. */
+.app-sidebar-footer  { display: grid; gap: 8px; }
+.app-sidebar-footer a  { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #b4bcd0; }
+.app-main-content > section  { margin: 0 auto; width: 100%; max-width: 1280px; }
+.app-main-content > section > .ds-card:first-child  { padding: 0 0 24px; background: transparent; border: 0; box-shadow: none; border-bottom: 1px solid #24282c; border-radius: 0; }
+.app-main-content > section h1  { color: #f7f8f8; font-size: 32px; font-weight: 600; line-height: 1.2; letter-spacing: -0.04em; }
+.app-main-content :is(.clients-header,.bookings-header,.kb-header,.mcp-header,.account-header,.agent-header) > div:first-child > p  { color: #9c9da1; font-size: 13px; margin-top: 8px; }
+.app-main-content > section h2  { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; }
+.app-main-content :is(.clients-header-actions,.bookings-header-actions,.kb-header-actions)  { margin-left: auto; }
+.app-main-content :is(.clients-footer,.bookings-footer,.kb-footer)  { color: #9c9da1; font-size: 12px; }
+.chat-page  { height: calc(100dvh - 136px); min-height: 440px; }
+.chat-message-list  { padding: 24px; gap: 16px; }
+.chat-message  { padding: 16px; background: #1b1c1e; border-color: #2a2e33; }
+.chat-message p  { font-size: 13px; line-height: 1.7; color: #d2d7de; }
+.chat-composer  { padding: 16px; border-top: 1px solid #24282c; }
+.chat-streaming-indicator  { font-size: 12px; color: #9c9da1; }
+.agent-steps  { color: #9c9da1; line-height: 1.7; font-size: 13px; }
+.agent-step-meta  { font-size: 12px; }
+.agent-page > p  { font-size: 12px; color: #9c9da1; }
+.agent-details pre, .mcp-json  { background: #101112; border: 1px solid #2a2e33; padding: 16px; border-radius: 8px; color: #d2d7de; font-family: var(--ds-typography-code); font-size: 12px; }
+.clients-dialog dt, .bookings-dialog dt  { font-size: 12px; color: #9c9da1; }
+.clients-dialog dd, .bookings-dialog dd  { font-size: 13px; color: #f7f8f8; }
+.clients-dialog h3, .bookings-dialog h3  { font-size: 16px; font-weight: 600; }
+.clients-form fieldset + fieldset, .bookings-form fieldset + fieldset  { border-top: 1px solid #24282c; padding-top: 24px; }
+.bookings-metric h3  { color: #9c9da1; font-size: 12px; }
+.bookings-metric p  { font-size: 24px; font-weight: 600; }
+/* Login keeps the existing form, validation and authenticated redirects. */
+body .auth-page { margin: 0; min-height: 100svh; display: grid; grid-template-columns: 1fr 1fr; background: #08090a; }
+body .auth-intro { padding: 48px; display: flex; flex-direction: column; justify-content: space-between; background: #101112; border-right: 1px solid #24282c; }
+body .auth-intro-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #f7f8f8; font-size: 13px; font-weight: 600; }
+body .auth-eyebrow { font-size: 12px; color: #8b93a1; letter-spacing: 0.04em; }
+body .auth-intro .auth-intro-title { font-size: clamp(40px,4vw,64px); line-height: 1.1; letter-spacing: -0.04em; font-weight: 600; margin: 24px 0; }
+body .auth-intro-title em { font-family: var(--ds-typography-body); font-style: normal; font-weight: 600; color: #9c9da1; }
+body .auth-intro-description { max-width: 40ch; font-size: 13px; color: #9c9da1; line-height: 1.7; }
+body .auth-workflows { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 32px; color: #8b93a1; }
+body .auth-workflows span { display: inline-flex; align-items: center; gap: 8px; padding: 12px; border: 1px solid #2a2e33; border-radius: 8px; color: #b4bcd0; }
+body .auth-back,body .auth-mobile-back { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #9c9da1; font-size: 12px; }
+body .auth-form-area { display: flex; align-items: center; justify-content: center; padding: 40px; min-width: 0; }
+body .auth-card { max-width: 400px; width: 100%; border: 0; background: transparent; box-shadow: none; padding: 0; }
+body .auth-card-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 40px; }
+body .auth-card .auth-card-brand h1 { font-size: 13px; font-weight: 600; }
+body .auth-card h2 { font-size: 32px; font-weight: 600; letter-spacing: -0.04em; line-height: 1.2; margin: 0 0 12px; }
+body .auth-card > p { color: #9c9da1; font-size: 13px; margin: 0 0 32px; }
+body .auth-form { gap: 24px; }
+body .auth-form > .ds-button { margin-top: 8px; justify-content: space-between; }
+body .auth-mobile-back { display: none; margin-top: 24px; }
+/* Keep the existing home navigation and media controls; subdue decorative media. */
+body .home-page, .home-page .home-hero, .home-loading  { background: #08090a; color: #f7f8f8; }
+.home-page .home-navbar  { background: #101112; border-color: #24282c; backdrop-filter: none; min-height: 72px; z-index: 2; }
+.home-page .home-brand span  { letter-spacing: 0; font-size: 13px; }
+.home-page .home-nav-links a  { color: #9c9da1; font-weight: 400; padding: 8px; }
+.home-page .home-nav-links a:hover, .home-page .home-nav-links a[aria-current="page"], .home-page .home-mobile-links a[aria-current="page"]  { color: #f7f8f8; background: #24282c; border-color: #2a2e33; }
+.home-page .home-mobile-toggle  { color: #f7f8f8; background: #1b1c1e; border-color: #2a2e33; }
+.home-page .home-hero .hero-glow  { display: none; }
+.home-page .home-hero .hero-overlay  { background: #08090af5; backdrop-filter: none; }
+.home-page .home-hero .hero-content  { max-width: 1344px; padding: 120px 32px 64px; }
+.home-page .home-dashboard .dashboard-header h1  { font-size: 40px; }
+.home-page .home-dashboard .dashboard-metric p  { font-size: 32px; font-weight: 600; margin-top: 16px; }
+.home-page .home-dashboard .dashboard-metric h2  { font-size: 12px; font-weight: 500; }
+.home-page .home-dashboard .dashboard-panel h2, .home-page .home-dashboard .dashboard-charts > h2  { font-size: 18px; font-weight: 600; }
+.home-page .hero-video-toggle  { background: #141516; border-color: #2a2e33; color: #b4bcd0; z-index: 2; }
+.home-page .home-skip  { z-index: 10; }
+.home-page a:focus-visible, .home-page button:focus-visible  { outline-color: #7170ff; outline-offset: 4px; }
+@media (max-width: 1023px)  {body .auth-page { grid-template-columns: 1fr; }
+body .auth-intro { display: none; }
+body .auth-mobile-back { display: inline-flex; }
+body .auth-form-area { padding: 32px 24px; } }
+@media (max-width: 767px)  { .app-main-content > section h1, .home-page .home-dashboard .dashboard-header h1  { font-size: 32px; } .app-main-content :is(.clients-header-actions,.bookings-header-actions,.kb-header-actions)  { margin-left: 0; } .chat-page  { height: calc(100dvh - 176px); min-height: 360px; } .chat-message-list  { padding: 16px; } .home-page .home-hero .hero-content  { padding: 104px 16px 48px; } }
+
+.app-sidebar-link[data-variant="primary"]:hover:not(:disabled)  { background: #24282c; border-color: #3e3e44; color: #f7f8f8; }
+.home-page .home-hero .hero-content  { z-index: 1; }
+
+/* Keep tariff references, dates and types readable inside the existing scroll container. */
+.scales-table table { min-width: 1200px; }
+.scales-table :is(th,td):is(:first-child,:nth-child(4),:nth-child(5),:nth-child(6),:nth-child(7),:nth-child(8)) { white-space: nowrap; overflow-wrap: normal; word-break: normal; }

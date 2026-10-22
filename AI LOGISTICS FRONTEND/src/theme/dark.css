@@ -1,0 +1,86 @@
+/* LogisticsReference dark screenshot theme. Existing component contracts are preserved. */
+:root { --reference-border: #24282c; --reference-muted: #9c9da1; --reference-success: #27a644; --reference-danger: #f34e52; }
+.ds-card { background: var(--ds-colors-surface); box-shadow: var(--ds-shadows-card); border-color: var(--reference-border); }
+.ds-button { min-height: 36px; padding: 8px 16px; font-size: 13px; border-radius: 8px; background: #1b1c1e; color: #f7f8f8; border-color: #2a2e33; transition: background 160ms ease, border-color 160ms ease, color 160ms ease; }
+.ds-button:hover:not(:disabled) { background: #24282c; border-color: #3e3e44; }
+.ds-button[data-variant="primary"] { background: #7170ff; border-color: #7170ff; color: #ffffff; }
+.ds-button[data-variant="primary"]:hover:not(:disabled) { background: #828fff; border-color: #828fff; }
+.ds-button[data-variant="ghost"] { background: transparent; border-color: transparent; }
+.ds-button:focus-visible, .ds-input:focus-visible, .ds-select:focus-visible, .ds-dropdown-item:focus-visible, a:focus-visible { outline: 2px solid #7170ff; outline-offset: 4px; }
+.ds-field { gap: 8px; }
+.ds-field > label, .ds-field-help { color: #9c9da1; font-size: 12px; }
+.ds-input, .ds-select { min-height: 36px; padding: 8px 12px; border-color: #2a2e33; background: #101112; font-size: 13px; }
+.ds-input:hover, .ds-select:hover { border-color: #3e3e44; }
+.ds-input::placeholder { color: #8b93a1; }
+.ds-badge { font-size: 12px; padding: 4px 8px; border: 1px solid #3e3e44; color: #b4bcd0; background: #1b1c1e; border-radius: 999px; }
+.ds-badge[data-variant="success"] { color: #27a644; background: #27a64414; border-color: #27a64440; }
+.ds-badge[data-variant="warning"] { color: #d2d7de; background: #d2d7de0a; border-color: #3e3e44; }
+.ds-badge[data-variant="error"] { color: #f34e52; background: #f34e5214; border-color: #f34e5240; }
+.ds-alert { background: #141516; border-color: #2a2e33; padding: 16px; font-size: 13px; color: #b4bcd0; }
+.ds-alert[data-variant="success"] { background: #27a6440a; border-color: #27a64440; }
+.ds-alert[data-variant="warning"] { background: #1b1c1e; border-color: #3e3e44; }
+.ds-alert[data-variant="error"] { background: #f34e520a; border-color: #f34e5240; }
+.ds-state { gap: 16px; padding: 32px 24px; }
+.ds-state > div { color: #f7f8f8; }
+.ds-table { font-size: 13px; }
+.ds-table th, .ds-table td { border-color: #24282c; padding: 12px 16px; }
+.ds-table th { background: #101112; color: #9c9da1; font-size: 12px; letter-spacing: 0; text-transform: none; font-weight: 500; }
+.ds-table caption { font-size: 13px; font-weight: 600; padding: 16px; }
+.ds-table tbody tr:hover { background: #ffffff05; }
+.ds-table td .ds-button[data-variant="ghost"] { color: #b4bcd0; }
+.ds-table td .ds-button { min-height: 32px; padding: 4px 12px; }
+.ds-dropdown-menu { background: #1b1c1e; box-shadow: 0 4px 12px #00000026; padding: 8px; }
+.ds-dropdown-item:hover:not(:disabled), .ds-dropdown-item:focus-visible { background: #24282c; }
+.ds-modal-backdrop { background: #00000099; backdrop-filter: none; }
+.ds-modal { background: #141516; box-shadow: 0 8px 32px #08090a; }
+.ds-modal-header, .ds-modal-content, .ds-modal-actions { padding: 24px; }
+.ds-modal-header h2 { font-size: 18px; font-weight: 600; }
+.ds-modal-header { border-color: #24282c; }
+.ds-modal-actions { border-color: #24282c; }
+.app-layout { grid-template-columns: 240px minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 0; border: 0; background: #08090a; }
+.app-header { position: sticky; top: 0; z-index: 2; border: 0; border-bottom: 1px solid #24282c; border-radius: 0; box-shadow: none; background: #101112; backdrop-filter: none; }
+.app-header header { min-height: 64px; padding: 16px 24px; gap: 24px; }
+.app-header-brand { display: inline-flex; align-items: center; gap: 12px; color: #f7f8f8; text-decoration: none; }
+.app-header-title { font-size: 13px; font-weight: 600; letter-spacing: 0; }
+.app-header-context { font-size: 12px; color: #9c9da1; border-left: 1px solid #2a2e33; padding-left: 24px; }
+.app-header-actions { align-items: center; gap: 16px; font-size: 12px; }
+.app-user { display: inline-flex; align-items: center; gap: 8px; }
+.app-user-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #2a2e33; border-radius: 8px; color: #9c9da1; }
+.app-sidebar { position: sticky; top: 68px; max-height: calc(100dvh - 68px); overflow-y: auto; padding: 24px 16px; border: 0; border-right: 1px solid #24282c; border-radius: 0; background: #101112; box-shadow: none; min-height: calc(100dvh - 68px); }
+.app-sidebar-heading { font-size: 12px; color: #8b93a1; margin: 0 12px 16px; letter-spacing: 0; }
+.app-sidebar nav { gap: 4px; }
+.app-sidebar-link { padding: 8px 12px; min-height: 36px; gap: 12px; background: transparent; border: 1px solid transparent; font-size: 13px; font-weight: 400; border-radius: 8px; color: #9c9da1; }
+.app-sidebar-link[data-variant="primary"] { background: #24282c; border-color: #2a2e33; color: #f7f8f8; }
+.app-sidebar-link:hover:not(:disabled) { background: #1b1c1e; color: #f7f8f8; }
+.app-sidebar-link svg { flex-shrink: 0; width: 16px; height: 16px; }
+.app-sidebar-footer { margin-top: 24px; padding: 16px 12px 0; color: #8b93a1; font-size: 12px; border-top: 1px solid #24282c; }
+.app-sidebar-home { display: block; margin-top: 8px; color: #b4bcd0; text-decoration: none; }
+.app-main-content { padding: 32px; max-width: 100%; }
+.app-layout[data-navigation="compact"] { grid-template-columns: minmax(0, 1fr); }
+.ds-modal .app-sidebar { position: static; max-height: none; min-height: 0; border: 0; padding: 0; }
+.ds-modal .app-sidebar-heading { display: none; }
+.app-skip-link { z-index: 10; }
+.dashboard-page { width: 100%; max-width: 1280px; margin: 0 auto; gap: 24px; }
+.dashboard-header { background: transparent; border: 0; box-shadow: none; padding: 0 0 24px; border-bottom: 1px solid #24282c; border-radius: 0; gap: 16px; }
+.dashboard-page .dashboard-header h1 { font-size: 40px; line-height: 1.2; letter-spacing: -0.04em; font-weight: 600; }
+.dashboard-header p { color: #9c9da1; font-size: 13px; line-height: 1.5; margin-top: 8px; }
+.dashboard-header .ds-badge { margin-left: auto; }
+.dashboard-refresh { margin-left: 0; }
+.dashboard-toolbar { background: transparent; padding: 0; border: 0; box-shadow: none; gap: 16px; }
+.dashboard-filter { flex: 0 1 240px; }
+.dashboard-metrics { gap: 16px; grid-template-columns: repeat(4,minmax(0,1fr)); }
+.dashboard-metric { padding: 24px; background: #141516; }
+.dashboard-page .dashboard-metric h2 { font-size: 12px; font-weight: 500; color: #9c9da1; }
+.dashboard-page .dashboard-metric p { margin: 16px 0 0; font-size: 32px; line-height: 1.2; font-weight: 600; letter-spacing: -0.04em; }
+.dashboard-panel { padding: 24px; }
+.dashboard-page .dashboard-panel h2, .dashboard-charts > h2 { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; }
+.dashboard-panel > p, .dashboard-charts > p { color: #9c9da1; font-size: 12px; margin-top: 8px; }
+.dashboard-charts .reactGridItem { background: #141516; border-radius: 12px; border: 1px solid #24282c; }
+.dashboard-charts .react-grid-item > .ds-card { border: 0; background: transparent; box-shadow: none; padding: 16px 8px 16px 0; }
+.dashboard-footer { justify-content: space-between; font-size: 12px; color: #9c9da1; }
+.dashboard-footer p { margin: 0; }
+@media (max-width: 1023px) { .app-layout { grid-template-columns: 208px minmax(0,1fr); } .app-main-content { padding: 24px; } .app-header-context { display: none; } .dashboard-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 767px) { .app-header header { padding: 16px; gap: 12px; } .app-header-actions { gap: 8px; } .app-user { font-size: 12px; } .app-user-icon { display: none; } .app-main-content { padding: 24px 16px; } .dashboard-page .dashboard-header h1 { font-size: 32px; } .dashboard-header .ds-badge { margin-left: 0; } .dashboard-refresh { margin-left: auto; } .dashboard-filter { flex: 1 1 100%; } .dashboard-panel { padding: 16px; } }
+@media (max-width: 479px) { .dashboard-metrics { grid-template-columns: 1fr; } .app-header-actions { width: 100%; justify-content: space-between; } }
+@media (prefers-reduced-motion: no-preference) { .dashboard-metrics { animation: reference-enter 300ms ease-out both; } @keyframes reference-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } } }
+@media (prefers-reduced-motion: reduce) { .ds-button, .ds-input, .ds-select, .reactGridItem, .react-grid-layout { transition: none; } }

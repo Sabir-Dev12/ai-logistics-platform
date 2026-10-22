@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Logistics.Verify</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>Logistics.Verify</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Logistics.Domain\Logistics.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Logistics.Infrastructure\Logistics.Infrastructure.csproj" />
+
+    <!--
+      Referenced so their xunit facts can be INVOKED, not so they can be linked. `dotnet test` cannot run in
+      this environment: VSTest needs named pipes, which the sandbox blocks, so these two projects compiled for
+      thirty rounds without a single one of their tests ever executing. Reflection over the [Fact]/[Theory]
+      attributes runs them without VSTest. The xunit package itself is deliberately NOT referenced — the
+      attributes are matched by name, so the runner stays independent of the test framework's types.
+    -->
+    <ProjectReference Include="..\Logistics.UnitTests\Logistics.UnitTests.csproj" />
+    <ProjectReference Include="..\Logistics.IntegrationTests\Logistics.IntegrationTests.csproj" />
+  </ItemGroup>
+
+</Project>

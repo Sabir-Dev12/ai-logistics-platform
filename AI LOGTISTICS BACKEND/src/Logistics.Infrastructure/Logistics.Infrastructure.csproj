@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Logistics.Infrastructure</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      EF Core 8 is kept per the agreed target stack. A net10.0 project can consume the net8.0
+      EF Core assemblies, and 8.0.22 is the version present in this machine's offline package cache.
+    -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.22" />
+    <PackageReference Include="PdfPig" Version="0.1.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      The persistence registration needs IConfiguration, IServiceCollection and ILogger<T>. Those live
+      in the ASP.NET Core shared framework, so a FrameworkReference is used instead of pulling in
+      individual Microsoft.Extensions.* packages (which would require network access to restore).
+    -->
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Logistics.Application\Logistics.Application.csproj" />
+    <ProjectReference Include="..\Logistics.Domain\Logistics.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

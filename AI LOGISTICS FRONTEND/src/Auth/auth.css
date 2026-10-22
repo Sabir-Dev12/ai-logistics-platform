@@ -1,0 +1,5 @@
+.auth-page { display: flex; justify-content: center; min-width: 0; margin: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); }
+.auth-card { width: min(100%, calc(14 * var(--ds-spacing-lg))); padding: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); }
+.auth-card h1, .auth-card h2 { font-size: inherit; font-weight: inherit; margin: 0; }
+.auth-card h2, .auth-card p { margin: var(--ds-spacing-grid-y) 0; }
+.auth-form { display: grid; gap: var(--ds-spacing-grid-y); }

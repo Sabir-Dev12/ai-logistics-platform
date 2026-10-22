@@ -1,0 +1,43 @@
+## Build output
+App_Data/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Visual Studio / Rider
+.vs/
+.idea/
+*.DotSettings.user
+
+## Test / coverage output
+[Tt]est[Rr]esult*/
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+
+## NuGet
+*.nupkg
+*.snupkg
+packages/
+!packages/build/
+
+## Publish output
+publish/
+*.publishsettings
+
+## Local database files
+*.mdf
+*.ldf
+*.ndf
+
+## Secrets — never commit a real connection string or tenant credential
+appsettings.Local.json
+appsettings.*.Local.json
+*.pfx
+*.snk

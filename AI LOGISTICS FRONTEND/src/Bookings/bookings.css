@@ -1,0 +1,29 @@
+.bookings-page { display: grid; gap: var(--ds-spacing-grid-y); margin: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); min-width: 0; }
+.bookings-header, .bookings-toolbar { display: flex; flex-wrap: wrap; gap: var(--ds-spacing-grid-y); padding: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); }
+.bookings-header { align-items: center; }
+.bookings-header-actions { margin-left: auto; display: flex; flex-wrap: wrap; gap: var(--ds-spacing-grid-x); }
+.bookings-page h1, .bookings-dialog h3 { font-size: inherit; font-weight: inherit; margin: 0; }
+.bookings-page p, .bookings-dialog p { margin: var(--ds-spacing-grid-x) 0 0; overflow-wrap: anywhere; }
+.bookings-toolbar { align-items: end; }
+.bookings-search { flex: 2; min-width: min(100%, calc(6 * var(--ds-spacing-lg))); }
+.bookings-filter { flex: 1; min-width: min(100%, calc(6 * var(--ds-spacing-lg))); }
+.bookings-list { min-width: 0; }
+.bookings-table .ds-table { min-width: calc(32 * var(--ds-spacing-lg)); }
+.bookings-table td { overflow-wrap: anywhere; }
+.bookings-row-actions, .bookings-footer, .bookings-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ds-spacing-grid-x); }
+.bookings-row-actions { min-width: calc(4 * var(--ds-spacing-lg)); }
+.bookings-table .ds-button { text-align: left; }
+.bookings-footer { gap: var(--ds-spacing-grid-y); }
+.bookings-footer p { margin: 0; font-family: var(--ds-typography-widget); }
+.bookings-form, .bookings-detail, .bookings-capacity, .bookings-confirmation { display: grid; gap: var(--ds-spacing-grid-y); min-width: 0; }
+.bookings-form fieldset { margin: 0; padding: 0; min-width: 0; border: 0; }
+.bookings-form legend { margin-bottom: var(--ds-spacing-grid-y); }
+.bookings-fields { display: flex; flex-wrap: wrap; gap: var(--ds-spacing-grid-y); margin-top: var(--ds-spacing-grid-y); }
+.bookings-fields > * { flex: 1; min-width: min(100%, calc(8 * var(--ds-spacing-lg))); }
+.bookings-detail dl { margin-bottom: 0; }
+.bookings-detail dd { margin: var(--ds-spacing-grid-x) 0 0; overflow-wrap: anywhere; }
+.bookings-detail-table .ds-table { min-width: calc(24 * var(--ds-spacing-lg)); }
+.bookings-line, .bookings-metric { padding: var(--ds-spacing-grid-y) var(--ds-spacing-grid-x); min-width: 0; }
+.bookings-capacity-grid { display: flex; flex-wrap: wrap; gap: var(--ds-spacing-grid-y); }
+.bookings-capacity-grid > * { flex: 1; min-width: min(100%, calc(5 * var(--ds-spacing-lg))); }
+.bookings-dialog { overflow-wrap: anywhere; }

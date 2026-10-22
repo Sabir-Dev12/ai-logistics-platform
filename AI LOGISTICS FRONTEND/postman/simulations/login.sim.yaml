@@ -1,0 +1,5 @@
+simulation: logistics-login
+routing: path
+mocks:
+  - routeKey: api
+    path: ../mocks/auth/config.yaml
